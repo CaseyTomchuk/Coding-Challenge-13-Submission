@@ -16,6 +16,12 @@ function createEmployeeCard(name, position) {
 const removeButton = document.createElement("button"); // creating a button and assigning it to removeButton
     removeButton.textContent = "Remove"
 
+// (Task 4) When we click the remove button, we will stop the event from being registered elsewhere, and we will remove the employee card from employeeContainer
+    removeButton.addEventListener("click", function(click) {
+        click.stopPropagation(); // This will prevent the "Employee Container Clicked" log from happening when we click remove
+        employeeContainer.removeChild(employeeCard);
+});
+
 // appending the button to the employeeCard
     employeeCard.appendChild(removeButton);
 // appending employeeCard to the employeeContainer div
@@ -38,3 +44,10 @@ employeeCardArray.forEach((card) => {
     card.style.borderRadius = '5px';
     card.style.display ='inline-block';
 }); // This is based on the HTML code that was given for coding challenge 12
+
+// Task 4: Implementing Removal of Employee Cards with Event Bubbling
+
+// Clicking anywhere (aside from remove) in an employeeContainer will log Employee Container Clicked
+employeeContainer.addEventListener(`click`, function() {
+    console.log("Employee Container Clicked");
+});
