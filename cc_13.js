@@ -7,23 +7,68 @@ function createEmployeeCard(name, position) {
     const employeeCard = document.createElement("div");
     employeeCard.setAttribute("class", "employee-Card");
 
-// Decided to make defining the name and position done with .innerHTML so I didn't have to initialize a unique variable for each
-    employeeCard.innerHTML = 
-    `<h3>Employee: ${name}</h3>
-    <p>Position: ${position}</p>`;
+// Creating employeeName and employeePosition and appending them to the employeeCard (changed on task 5)
+    const employeeName = document.createElement("h3");
+    employeeName.textContent = `Employee Name: ${name}`;
+    employeeCard.appendChild(employeeName);
 
-// Chose to make create the remove button with createElement because it felt more intuitive
-const removeButton = document.createElement("button"); // creating a button and assigning it to removeButton
+    const employeePosition = document.createElement("p");
+    employeePosition.textContent = `Position: ${position}`;
+    employeeCard.appendChild(employeePosition);
+
+// creating a button and assigning it to removeButton
+const removeButton = document.createElement("button"); 
     removeButton.textContent = "Remove"
 
 // (Task 4) When we click the remove button, we will stop the event from being registered elsewhere, and we will remove the employee card from employeeContainer
     removeButton.addEventListener("click", function(click) {
-        click.stopPropagation(); // This will prevent the "Employee Container Clicked" log from happening when we click remove
+        click.stopPropagation(); 
         employeeContainer.removeChild(employeeCard);
 });
 
+// (Task 5) 
+// Creating the edit button
+    const editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+
+/* Theres a lot of code that runs when we click the button. Two input fields are created with placeholder text equal to
+ the employeeName and employeePosition. A save button is also created, and when that is clicked it will upadate name and 
+ position to match the input field, then it will remove the input fields and the save button  */ 
+    editButton.addEventListener("click", function(edit) {
+        edit.stopPropagation();
+
+        const blank = document.createElement("div");
+        employeeCard.appendChild(blank); // this just creates white space
+
+// Creating input fields
+        const inputField = document.createElement("input");
+        inputField.value = employeeName.textContent;
+        employeeCard.appendChild(inputField);
+
+        const inputField2 = document.createElement("input");
+        inputField2.value = employeePosition.textContent;
+        employeeCard.appendChild(inputField2);
+
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save";
+
+// On clicking save we set text content to the input field values, and delete any trace of the input field or save button
+        saveButton.addEventListener("click", function(save) {
+            save.stopPropagation();
+            employeeName.textContent = inputField.value;
+            employeePosition.textContent = inputField2.value;
+            employeeCard.removeChild(saveButton);
+            employeeCard.removeChild(inputField);
+            employeeCard.removeChild(inputField2);
+        })
+        // Appending the save button only when we click the edit button
+        employeeCard.appendChild(saveButton);
+    })
+
 // appending the button to the employeeCard
     employeeCard.appendChild(removeButton);
+// appending edit button to employeeCard
+    employeeCard.appendChild(editButton);
 // appending employeeCard to the employeeContainer div
     employeeContainer.appendChild(employeeCard); 
 };
@@ -51,3 +96,6 @@ employeeCardArray.forEach((card) => {
 employeeContainer.addEventListener(`click`, function() {
     console.log("Employee Container Clicked");
 });
+
+// Task 5: Inline Editing of Employee Details
+// Lines 31-65
