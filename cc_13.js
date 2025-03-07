@@ -24,3 +24,17 @@ const removeButton = document.createElement("button"); // creating a button and 
 
 createEmployeeCard("Casey", "CEO"); 
 createEmployeeCard("Elise", "Manager");
+
+// Task 3: Converting Nodelists to arrays for bulk updates
+
+const employeeCardSelector = document.querySelectorAll(".employee-Card");
+const employeeCardArray = Array.from(employeeCardSelector); // Converting NodeList into an array
+
+// For each individual card in the array, we are making applying each of these style properties
+employeeCardArray.forEach((card) => { 
+    card.style.padding = `10px`;
+    card.style.margin = '10px';
+    card.style.backgroundColor = 'lightblue';
+    card.style.borderRadius = '5px';
+    card.style.display ='inline-block';
+}); // This is based on the HTML code that was given for coding challenge 12
